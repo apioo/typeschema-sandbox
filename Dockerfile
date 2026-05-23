@@ -8,4 +8,4 @@ RUN npm run build --prod
 #stage 2
 FROM nginx:alpine
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=node /app/dist/typeschema-sandbox /usr/share/nginx/html
+COPY --from=node /app/dist/typeschema-sandbox/browser /usr/share/nginx/html
