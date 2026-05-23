@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
-import {ExportService, Specification} from "ngx-typeschema-editor";
+import {ExportService, Specification, TypeschemaEditorModule} from "ngx-typeschema-editor";
+import {Highlight} from "ngx-highlightjs";
 
 @Component({
   selector: 'app-sandbox',
   templateUrl: './sandbox.component.html',
+  imports: [
+    TypeschemaEditorModule,
+    Highlight
+  ],
   styleUrls: ['./sandbox.component.css']
 })
 export class SandboxComponent {
