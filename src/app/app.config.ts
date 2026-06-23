@@ -4,6 +4,7 @@ import {provideHttpClient, withFetch} from "@angular/common/http";
 import {provideHighlightOptions} from "ngx-highlightjs";
 
 import {routes} from './app.routes';
+import {NGX_MONACO_EDITOR_CONFIG} from "ngx-monaco-editor-v2";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,13 @@ export const appConfig: ApplicationConfig = {
       languages: {
         json: () => import('highlight.js/lib/languages/json'),
       },
-    })
+    }),
+    {
+      provide: NGX_MONACO_EDITOR_CONFIG,
+      useFactory: () => {
+        return {
+        };
+      }
+    }
   ]
 };

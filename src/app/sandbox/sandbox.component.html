@@ -1,12 +1,42 @@
 
 <div class="container-fluid p-3">
   <div class="row">
-    <div class="col-md-6">
-      <typeschema-editor [specification]="spec" [operationEnabled]="false" (change)="change($event)"></typeschema-editor>
+    <div class="col-xl-2">
+      <div class="btn-group mb-3 sticky-top" role="group">
+        <button type="button" class="btn btn-success" (click)="new()" title="New Document">New Document</button>
+      </div>
+      <div class="list-group">
+        @for (document of documents(); track $index; let idx = $index) {
+          <a (click)="select($index)" class="list-group-item list-group-item-action" [ngClass]="{'active': idx === selected()}">{{ document.name }}</a>
+        }
+      </div>
+      <br>
     </div>
-    <div class="col-md-6">
-      @if (preview) {
-        <pre><code [highlight]="preview" language="json"></code></pre>
+    <div class="col-xl-7">
+      @if (selected() !== -1) {
+        <typeschema-editor [id]="'document-' + selected()" [specification]="spec()" [operationEnabled]="false" (change)="change($event)"></typeschema-editor>
+      }
+      @else {
+        <div class="">
+          <p class="fs-5 fw-bold text-muted">Please create a document</p>
+        </div>
+      }
+    </div>
+    <div class="col-xl-3">
+      @if (selected() !== -1) {
+        <div class="input-group mb-3 sticky-top">
+          <button type="button" class="btn btn-success" (click)="export()" title="Export">Download</button>
+          <select [ngModel]="type()" (ngModelChange)="type.set($event)" class="form-select">
+            @for (type of types(); track $index) {
+              <option [ngValue]="type.name">{{ type.name }}</option>
+            }
+          </select>
+        </div>
+        @if (preview(); as preview) {
+          <div style="width:100%;height:500px;border:1px solid #ced4da">
+            <ngx-monaco-editor [ngModel]="preview" [options]="{theme: 'vs-light', language: 'json', readOnly: true}" [id]="'preview-' + selected()" [name]="'preview-' + selected()" style="height:100%"></ngx-monaco-editor>
+          </div>
+        }
       }
     </div>
   </div>
